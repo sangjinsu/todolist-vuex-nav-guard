@@ -49,7 +49,7 @@ export default {
         headers: this.setToken
       })
         .then(() => {
-          this.todos = this.getTodos()
+          this.todos = this.todos.filter(td => td.id !== todo.id)
         })
         .catch(err => {
           console.log(err)
@@ -63,13 +63,15 @@ export default {
 
       axios({
         method: 'put',
-        url: `${SERVER_URL}/${todo.id}/`,
+        url: `${SERVER_URL}/todos/${todo.id}/`,
         data: todoItem,
         headers: this.setToken
       })
         .then(() => {
           todo.is_completed = !todo.is_completed
-      })
+      }).catch(err => {
+          console.log(err)
+        })
     },
   },
 }
